@@ -1,13 +1,13 @@
 package info.novatec.micronaut.camunda.app;
 
 import io.micronaut.test.annotation.MicronautTest;
+import io.micronaut.test.annotation.MockBean;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
-import org.camunda.bpm.engine.test.mock.Mocks;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -19,12 +19,14 @@ class ProcessTest {
     @Inject
     RuntimeService runtimeService;
 
-    LoggerDelegate loggerDelegate = mock(LoggerDelegate.class);
-
-    @BeforeEach
-    void init () {
-        Mocks.register("loggerDelegate", loggerDelegate);
+    @MockBean(LoggerDelegate.class)
+    @Named("loggerDelegate")
+    LoggerDelegate loggerDelegate() {
+        return mock(LoggerDelegate.class);
     }
+
+    @Inject
+    LoggerDelegate loggerDelegate;
 
     @Test
     public void verifyBeanInvocationInServiceTask() throws InterruptedException {

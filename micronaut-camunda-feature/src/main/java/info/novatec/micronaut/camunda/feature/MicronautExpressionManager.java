@@ -5,7 +5,6 @@ import org.camunda.bpm.engine.impl.el.ReadOnlyMapELResolver;
 import org.camunda.bpm.engine.impl.el.VariableContextElResolver;
 import org.camunda.bpm.engine.impl.el.VariableScopeElResolver;
 import org.camunda.bpm.engine.impl.javax.el.*;
-import org.camunda.bpm.engine.test.mock.MockElResolver;
 
 // Implementation based on https://github.com/camunda/camunda-bpm-platform/blob/master/engine-spring/core/src/main/java/org/camunda/bpm/engine/spring/SpringExpressionManager.java
 public class MicronautExpressionManager extends ExpressionManager {
@@ -21,7 +20,6 @@ public class MicronautExpressionManager extends ExpressionManager {
         CompositeELResolver compositeElResolver = new CompositeELResolver();
         compositeElResolver.add(new VariableScopeElResolver());
         compositeElResolver.add(new VariableContextElResolver());
-        compositeElResolver.add(new MockElResolver());
 
         if(beans != null) {
             // Only expose limited set of beans in expressions
